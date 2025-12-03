@@ -7,7 +7,15 @@
     "test": "vitest --run",
     "test:watch": "vitest",
     "test:coverage": "vitest --run --coverage",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "test:property": "vitest --run tests/property",
+    "validate:structure": "node tests/validation-report.js",
+    "validate:frontmatter": "node -e \"const fs=require('fs');const c=fs.readFileSync('POWER.md','utf-8');if(!c.match(/^---[\\r\\n][\\s\\S]+?[\\r\\n]---/)){process.exit(1)}\"",
+    "validate:mcp": "node -e \"JSON.parse(require('fs').readFileSync('mcp.json','utf-8'))\"",
+    "validate:links": "echo 'Link validation not implemented yet'",
+    "format:check": "echo 'Format check not implemented yet'",
+    "lint": "echo 'Lint not implemented yet'",
+    "build": "echo 'No build step required'"
   },
   "keywords": [
     "kiro",

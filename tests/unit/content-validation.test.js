@@ -15,7 +15,8 @@ describe('Content Validation', () => {
     it('should contain YAML frontmatter', () => {
       const powerPath = join(rootDir, 'POWER.md');
       const content = readFileSync(powerPath, 'utf-8');
-      expect(content).toMatch(/^---\n[\s\S]+?\n---/);
+      // Handle both Unix (\n) and Windows (\r\n) line endings
+      expect(content).toMatch(/^---[\r\n]+[\s\S]+?[\r\n]+---/);
     });
 
     it('should contain required sections', () => {
