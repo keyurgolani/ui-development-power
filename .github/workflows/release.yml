@@ -47,10 +47,10 @@ jobs:
       - name: Package power
         run: |
           mkdir -p ui-development-power
-          cp -r steering ui-development-power/
-          cp -r examples ui-development-power/
-          cp POWER.md ui-development-power/
-          cp mcp.json ui-development-power/
+          cp -r power/steering ui-development-power/
+          cp -r power/examples ui-development-power/
+          cp power/POWER.md ui-development-power/
+          cp power/mcp.json ui-development-power/
           cp README.md ui-development-power/
           cp LICENSE ui-development-power/
           cp CHANGELOG.md ui-development-power/

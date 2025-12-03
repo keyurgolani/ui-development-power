@@ -7,17 +7,16 @@ import { join } from 'path';
  * Validates that all required files exist in correct locations
  */
 describe('File Structure Validation', () => {
-  const rootDir = process.cwd().endsWith('ui-development-power') 
-    ? process.cwd() 
-    : join(process.cwd(), 'ui-development-power');
+  const rootDir = process.cwd();
+  const powerDir = join(rootDir, 'power');
 
-  it('should have POWER.md in root directory', () => {
-    const powerPath = join(rootDir, 'POWER.md');
+  it('should have POWER.md in power directory', () => {
+    const powerPath = join(powerDir, 'POWER.md');
     expect(existsSync(powerPath)).toBe(true);
   });
 
-  it('should have mcp.json in root directory', () => {
-    const mcpPath = join(rootDir, 'mcp.json');
+  it('should have mcp.json in power directory', () => {
+    const mcpPath = join(powerDir, 'mcp.json');
     expect(existsSync(mcpPath)).toBe(true);
   });
 
@@ -42,12 +41,12 @@ describe('File Structure Validation', () => {
   });
 
   it('should have steering directory', () => {
-    const steeringDir = join(rootDir, 'steering');
+    const steeringDir = join(powerDir, 'steering');
     expect(existsSync(steeringDir)).toBe(true);
   });
 
   it('should have examples directory', () => {
-    const examplesDir = join(rootDir, 'examples');
+    const examplesDir = join(powerDir, 'examples');
     expect(existsSync(examplesDir)).toBe(true);
   });
 });

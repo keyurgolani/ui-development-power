@@ -3,86 +3,86 @@ name: "ui-development"
 displayName: "UI Development Expert"
 description: "Build accessible, modern, and design-system-compliant user interfaces with expert guidance on component libraries, accessibility standards, responsive design patterns, and integration with design tools like Figma. Includes Chrome DevTools integration for debugging, testing, and WCAG compliance audits."
 keywords:
-  - ui
-  - ux
-  - design
-  - accessibility
-  - a11y
-  - wcag
-  - figma
-  - react
-  - component
-  - components
-  - library
-  - chakra
-  - radix
-  - headless
-  - mui
-  - material
-  - tailwind
-  - responsive
-  - mobile
-  - desktop
-  - breakpoint
-  - layout
-  - grid
-  - flexbox
-  - css
-  - styling
-  - theme
-  - design-system
-  - design-tokens
-  - tokens
-  - color
-  - typography
-  - spacing
-  - form
-  - forms
-  - input
-  - validation
-  - button
-  - modal
-  - dialog
-  - navigation
-  - nav
-  - menu
-  - dropdown
-  - tooltip
-  - animation
-  - transition
-  - micro-interaction
-  - performance
-  - optimization
-  - lazy-loading
-  - image
-  - icon
-  - svg
-  - aria
-  - semantic
-  - screen-reader
-  - keyboard
-  - focus
-  - contrast
-  - chrome
-  - devtools
-  - chrome-devtools
-  - lighthouse
-  - testing
-  - debug
-  - debugging
-  - visual-regression
-  - screenshot
-  - audit
-  - frontend
-  - interface
-  - user-interface
-  - user-experience
-  - prototype
-  - wireframe
-  - mockup
-mcpServers:
-  - figma
-  - chrome-devtools
+  [
+    "ui",
+    "ux",
+    "design",
+    "accessibility",
+    "a11y",
+    "wcag",
+    "figma",
+    "react",
+    "component",
+    "components",
+    "library",
+    "chakra",
+    "radix",
+    "headless",
+    "mui",
+    "material",
+    "tailwind",
+    "responsive",
+    "mobile",
+    "desktop",
+    "breakpoint",
+    "layout",
+    "grid",
+    "flexbox",
+    "css",
+    "styling",
+    "theme",
+    "design-system",
+    "design-tokens",
+    "tokens",
+    "color",
+    "typography",
+    "spacing",
+    "form",
+    "forms",
+    "input",
+    "validation",
+    "button",
+    "modal",
+    "dialog",
+    "navigation",
+    "nav",
+    "menu",
+    "dropdown",
+    "tooltip",
+    "animation",
+    "transition",
+    "micro-interaction",
+    "performance",
+    "optimization",
+    "lazy-loading",
+    "image",
+    "icon",
+    "svg",
+    "aria",
+    "semantic",
+    "screen-reader",
+    "keyboard",
+    "focus",
+    "contrast",
+    "chrome",
+    "devtools",
+    "chrome-devtools",
+    "lighthouse",
+    "testing",
+    "debug",
+    "debugging",
+    "visual-regression",
+    "screenshot",
+    "audit",
+    "frontend",
+    "interface",
+    "user-interface",
+    "user-experience",
+    "prototype",
+    "wireframe",
+    "mockup",
+  ]
+mcpServers: ["figma", "chrome-devtools"]
 ---
 
 # UI Development Expert Power

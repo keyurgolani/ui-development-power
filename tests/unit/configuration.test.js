@@ -7,13 +7,12 @@ import { join } from 'path';
  * Tests MCP server configuration parsing and structure
  */
 describe('Configuration Tests', () => {
-  const rootDir = process.cwd().endsWith('ui-development-power') 
-    ? process.cwd() 
-    : join(process.cwd(), 'ui-development-power');
+  const rootDir = process.cwd();
+  const powerDir = join(rootDir, 'power');
 
   describe('MCP Server Configuration', () => {
     it('should have valid structure for all servers', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
+      const mcpPath = join(powerDir, 'mcp.json');
       const config = JSON.parse(readFileSync(mcpPath, 'utf-8'));
       
       const servers = config.mcpServers;
@@ -26,14 +25,14 @@ describe('Configuration Tests', () => {
     });
 
     it('should configure Figma MCP server', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
+      const mcpPath = join(powerDir, 'mcp.json');
       const config = JSON.parse(readFileSync(mcpPath, 'utf-8'));
       
       expect(config.mcpServers).toHaveProperty('figma');
     });
 
     it('should configure Chrome DevTools MCP server', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
+      const mcpPath = join(powerDir, 'mcp.json');
       const config = JSON.parse(readFileSync(mcpPath, 'utf-8'));
       
       // Chrome DevTools provides both Playwright and Lighthouse functionality

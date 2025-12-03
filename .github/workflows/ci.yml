@@ -139,7 +139,7 @@ jobs:
         run: test -f README.md
 
       - name: Check POWER.md exists
-        run: test -f POWER.md
+        run: test -f power/POWER.md
 
       - name: Check CONTRIBUTING.md exists
         run: test -f CONTRIBUTING.md
@@ -155,24 +155,24 @@ jobs:
 
       - name: Verify all steering files exist
         run: |
-          test -f steering/ui-design-principles.md
-          test -f steering/accessibility-standards.md
-          test -f steering/design-systems-guide.md
-          test -f steering/component-libraries.md
-          test -f steering/figma-to-code-workflow.md
-          test -f steering/responsive-design-patterns.md
-          test -f steering/color-typography-spacing.md
-          test -f steering/accessibility-testing.md
-          test -f steering/browser-testing-workflow.md
-          test -f steering/micro-interactions.md
-          test -f steering/form-design-patterns.md
-          test -f steering/performance-optimization.md
+          test -f power/steering/ui-design-principles.md
+          test -f power/steering/accessibility-standards.md
+          test -f power/steering/design-systems-guide.md
+          test -f power/steering/component-libraries.md
+          test -f power/steering/figma-to-code-workflow.md
+          test -f power/steering/responsive-design-patterns.md
+          test -f power/steering/color-typography-spacing.md
+          test -f power/steering/accessibility-testing.md
+          test -f power/steering/browser-testing-workflow.md
+          test -f power/steering/micro-interactions.md
+          test -f power/steering/form-design-patterns.md
+          test -f power/steering/performance-optimization.md
 
       - name: Verify examples exist
         run: |
-          test -f examples/accessible-form.md
-          test -f examples/responsive-layout.md
-          test -f examples/figma-to-react.md
+          test -f power/examples/accessible-form.md
+          test -f power/examples/responsive-layout.md
+          test -f power/examples/figma-to-react.md
 
   build:
     name: Build Check
@@ -198,10 +198,10 @@ jobs:
       - name: Package power
         run: |
           mkdir -p dist
-          cp -r steering dist/
-          cp -r examples dist/
-          cp POWER.md dist/
-          cp mcp.json dist/
+          cp -r power/steering dist/
+          cp -r power/examples dist/
+          cp power/POWER.md dist/
+          cp power/mcp.json dist/
           cp README.md dist/
           cp LICENSE dist/
           cp CHANGELOG.md dist/

@@ -8,9 +8,8 @@
 import { readFileSync, existsSync } from 'fs';
 import { join } from 'path';
 
-const rootDir = process.cwd().endsWith('ui-development-power') 
-  ? process.cwd() 
-  : join(process.cwd(), 'ui-development-power');
+const rootDir = process.cwd();
+const powerDir = join(rootDir, 'power');
 
 console.log('🔍 UI Development Power - Final Validation Report\n');
 console.log('='.repeat(60));
@@ -36,9 +35,7 @@ function check(name, condition, details = '') {
 console.log('\n📁 File Structure');
 console.log('-'.repeat(60));
 
-const requiredFiles = [
-  'POWER.md',
-  'mcp.json',
+const requiredRootFiles = [
   'README.md',
   'LICENSE',
   'CONTRIBUTING.md',
@@ -47,9 +44,19 @@ const requiredFiles = [
   'vitest.config.js',
 ];
 
-requiredFiles.forEach(file => {
+requiredRootFiles.forEach(file => {
   const path = join(rootDir, file);
   check(`${file} exists`, existsSync(path));
+});
+
+const requiredPowerFiles = [
+  'POWER.md',
+  'mcp.json',
+];
+
+requiredPowerFiles.forEach(file => {
+  const path = join(powerDir, file);
+  check(`power/${file} exists`, existsSync(path));
 });
 
 // 2. Steering Files Validation
@@ -72,9 +79,9 @@ const requiredSteeringFiles = [
 ];
 
 requiredSteeringFiles.forEach(file => {
-  const path = join(rootDir, 'steering', file);
+  const path = join(powerDir, 'steering', file);
   const exists = existsSync(path);
-  check(`steering/${file}`, exists);
+  check(`power/steering/${file}`, exists);
   
   if (exists) {
     const content = readFileSync(path, 'utf-8');
@@ -86,7 +93,7 @@ requiredSteeringFiles.forEach(file => {
 console.log('\n📄 POWER.md Validation');
 console.log('-'.repeat(60));
 
-const powerPath = join(rootDir, 'POWER.md');
+const powerPath = join(powerDir, 'POWER.md');
 if (existsSync(powerPath)) {
   const powerContent = readFileSync(powerPath, 'utf-8');
   
@@ -105,15 +112,15 @@ if (existsSync(powerPath)) {
   check('Has Quick Reference section', powerContent.includes('## Quick Reference'));
   
   // Check keywords
-  const keywordCount = (powerContent.match(/- ui/g) || []).length;
-  check('Has comprehensive keywords', keywordCount > 0, 'Keywords present');
+  const hasKeywords = powerContent.includes('"ui"') || powerContent.includes('- ui');
+  check('Has comprehensive keywords', hasKeywords, 'Keywords present');
 }
 
 // 4. MCP Configuration Validation
 console.log('\n🔌 MCP Server Configuration');
 console.log('-'.repeat(60));
 
-const mcpPath = join(rootDir, 'mcp.json');
+const mcpPath = join(powerDir, 'mcp.json');
 if (existsSync(mcpPath)) {
   try {
     const mcpConfig = JSON.parse(readFileSync(mcpPath, 'utf-8'));
@@ -153,8 +160,8 @@ const exampleFiles = [
 ];
 
 exampleFiles.forEach(file => {
-  const path = join(rootDir, 'examples', file);
-  check(`examples/${file}`, existsSync(path));
+  const path = join(powerDir, 'examples', file);
+  check(`power/examples/${file}`, existsSync(path));
 });
 
 // 6. Documentation Validation

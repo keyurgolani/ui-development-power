@@ -7,20 +7,19 @@ import { join } from 'path';
  * Verifies that files contain required sections and valid structure
  */
 describe('Content Validation', () => {
-  const rootDir = process.cwd().endsWith('ui-development-power') 
-    ? process.cwd() 
-    : join(process.cwd(), 'ui-development-power');
+  const rootDir = process.cwd();
+  const powerDir = join(rootDir, 'power');
 
   describe('POWER.md validation', () => {
     it('should contain YAML frontmatter', () => {
-      const powerPath = join(rootDir, 'POWER.md');
+      const powerPath = join(powerDir, 'POWER.md');
       const content = readFileSync(powerPath, 'utf-8');
       // Handle both Unix (\n) and Windows (\r\n) line endings
       expect(content).toMatch(/^---[\r\n]+[\s\S]+?[\r\n]+---/);
     });
 
     it('should contain required sections', () => {
-      const powerPath = join(rootDir, 'POWER.md');
+      const powerPath = join(powerDir, 'POWER.md');
       const content = readFileSync(powerPath, 'utf-8');
       
       expect(content).toContain('# Overview');
@@ -31,14 +30,14 @@ describe('Content Validation', () => {
 
   describe('mcp.json validation', () => {
     it('should be valid JSON', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
+      const mcpPath = join(powerDir, 'mcp.json');
       const content = readFileSync(mcpPath, 'utf-8');
       
       expect(() => JSON.parse(content)).not.toThrow();
     });
 
     it('should contain mcpServers configuration', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
+      const mcpPath = join(powerDir, 'mcp.json');
       const content = JSON.parse(readFileSync(mcpPath, 'utf-8'));
       
       expect(content).toHaveProperty('mcpServers');
@@ -64,7 +63,7 @@ describe('Content Validation', () => {
 
     requiredSteeringFiles.forEach((filename) => {
       it(`should have ${filename} in steering directory`, () => {
-        const filePath = join(rootDir, 'steering', filename);
+        const filePath = join(powerDir, 'steering', filename);
         expect(existsSync(filePath)).toBe(true);
       });
     });
