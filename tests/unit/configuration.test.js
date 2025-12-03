@@ -32,18 +32,12 @@ describe('Configuration Tests', () => {
       expect(config.mcpServers).toHaveProperty('figma');
     });
 
-    it('should configure Playwright MCP server', () => {
+    it('should configure Chrome DevTools MCP server', () => {
       const mcpPath = join(rootDir, 'mcp.json');
       const config = JSON.parse(readFileSync(mcpPath, 'utf-8'));
       
-      expect(config.mcpServers).toHaveProperty('playwright');
-    });
-
-    it('should configure Lighthouse MCP server', () => {
-      const mcpPath = join(rootDir, 'mcp.json');
-      const config = JSON.parse(readFileSync(mcpPath, 'utf-8'));
-      
-      expect(config.mcpServers).toHaveProperty('lighthouse');
+      // Chrome DevTools provides both Playwright and Lighthouse functionality
+      expect(config.mcpServers).toHaveProperty('chrome-devtools');
     });
   });
 });

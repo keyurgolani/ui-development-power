@@ -1,0 +1,143 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20.x'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run tests
+        run: npm test
+
+      - name: Extract version from tag
+        id: get_version
+        run: echo "VERSION=${GITHUB_REF#refs/tags/v}" >> $GITHUB_OUTPUT
+
+      - name: Extract changelog for this version
+        id: changelog
+        run: |
+          VERSION=${{ steps.get_version.outputs.VERSION }}
+          CHANGELOG=$(sed -n "/## \[$VERSION\]/,/## \[/p" CHANGELOG.md | sed '$d')
+          echo "CHANGELOG<<EOF" >> $GITHUB_OUTPUT
+          echo "$CHANGELOG" >> $GITHUB_OUTPUT
+          echo "EOF" >> $GITHUB_OUTPUT
+
+      - name: Package power
+        run: |
+          mkdir -p ui-development-power
+          cp -r steering ui-development-power/
+          cp -r examples ui-development-power/
+          cp POWER.md ui-development-power/
+          cp mcp.json ui-development-power/
+          cp README.md ui-development-power/
+          cp LICENSE ui-development-power/
+          cp CHANGELOG.md ui-development-power/
+          cp CONTRIBUTING.md ui-development-power/
+          cp SECURITY.md ui-development-power/
+          cp package.json ui-development-power/
+          tar -czf ui-development-power-v${{ steps.get_version.outputs.VERSION }}.tar.gz ui-development-power/
+          zip -r ui-development-power-v${{ steps.get_version.outputs.VERSION }}.zip ui-development-power/
+
+      - name: Generate checksums
+        run: |
+          sha256sum ui-development-power-v${{ steps.get_version.outputs.VERSION }}.tar.gz > checksums.txt
+          sha256sum ui-development-power-v${{ steps.get_version.outputs.VERSION }}.zip >> checksums.txt
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v1
+        with:
+          name: Release v${{ steps.get_version.outputs.VERSION }}
+          body: |
+            # UI Development Power v${{ steps.get_version.outputs.VERSION }}
+
+            ${{ steps.changelog.outputs.CHANGELOG }}
+
+            ## Installation
+
+            ### Option 1: Via Kiro Powers Panel (Recommended)
+            1. Open Kiro IDE
+            2. Navigate to the Powers panel
+            3. Search for "UI Development Expert"
+            4. Click Install
+
+            ### Option 2: Manual Installation
+            Download the archive below and extract to your Kiro powers directory:
+
+            ```bash
+            # Download and extract
+            tar -xzf ui-development-power-v${{ steps.get_version.outputs.VERSION }}.tar.gz
+            
+            # Move to Kiro powers directory
+            mv ui-development-power ~/.kiro/powers/ui-development
+            ```
+
+            ### Option 3: Clone from GitHub
+            ```bash
+            git clone --branch v${{ steps.get_version.outputs.VERSION }} https://github.com/${{ github.repository }}.git ~/.kiro/powers/ui-development
+            ```
+
+            ## Verification
+
+            Verify the download integrity using SHA256 checksums:
+            ```bash
+            sha256sum -c checksums.txt
+            ```
+
+            ## What's Changed
+
+            See [CHANGELOG.md](https://github.com/${{ github.repository }}/blob/v${{ steps.get_version.outputs.VERSION }}/CHANGELOG.md) for full details.
+
+            ## Documentation
+
+            - [Full Documentation](https://github.com/${{ github.repository }}/blob/v${{ steps.get_version.outputs.VERSION }}/POWER.md)
+            - [README](https://github.com/${{ github.repository }}/blob/v${{ steps.get_version.outputs.VERSION }}/README.md)
+            - [Contributing Guide](https://github.com/${{ github.repository }}/blob/v${{ steps.get_version.outputs.VERSION }}/CONTRIBUTING.md)
+
+            ## Support
+
+            - [Report Issues](https://github.com/${{ github.repository }}/issues)
+            - [Discussions](https://github.com/${{ github.repository }}/discussions)
+            - [Security Policy](https://github.com/${{ github.repository }}/blob/v${{ steps.get_version.outputs.VERSION }}/SECURITY.md)
+          files: |
+            ui-development-power-v${{ steps.get_version.outputs.VERSION }}.tar.gz
+            ui-development-power-v${{ steps.get_version.outputs.VERSION }}.zip
+            checksums.txt
+          draft: false
+          prerelease: ${{ contains(steps.get_version.outputs.VERSION, 'alpha') || contains(steps.get_version.outputs.VERSION, 'beta') || contains(steps.get_version.outputs.VERSION, 'rc') }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Notify on success
+        if: success()
+        run: |
+          echo "✅ Release v${{ steps.get_version.outputs.VERSION }} created successfully!"
+          echo "📦 Artifacts uploaded"
+          echo "🔗 Release URL: https://github.com/${{ github.repository }}/releases/tag/v${{ steps.get_version.outputs.VERSION }}"
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Release failed!"
+          echo "Please check the logs and try again."
