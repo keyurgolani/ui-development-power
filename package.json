@@ -1,0 +1,32 @@
+{
+  "name": "ui-development-power",
+  "version": "0.1.0",
+  "description": "Kiro Power for building accessible, modern, and design-system-compliant user interfaces",
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest --run --coverage",
+    "test:ui": "vitest --ui"
+  },
+  "keywords": [
+    "kiro",
+    "power",
+    "ui",
+    "ux",
+    "design",
+    "accessibility",
+    "figma",
+    "react",
+    "component-library",
+    "design-system"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@vitest/ui": "^1.0.0",
+    "fast-check": "^3.15.0",
+    "vitest": "^1.0.0",
+    "@vitest/coverage-v8": "^1.0.0"
+  }
+}
